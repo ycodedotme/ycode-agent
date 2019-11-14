@@ -15,3 +15,81 @@ test {
     // Use TestNG for unit tests
     useTestNG()
 }
+
+
+//import groovy.lang.Closure;
+class InspectClosure extends DefaultTask{
+    String who
+
+    @TaskAction
+    void showDetail(){
+
+        def closure01Result = doClosure {
+            "delegate=${delegate.class.getName()}, 函数最后一个参数是Closure时可以使用{}"
+        }
+
+
+        def closure02 = { int times ->
+            def str = "Repeat [${times}]"
+            while (times > 0){
+                str += " ."
+                times --
+            }
+            return str
+        }
+
+        println "${who}, 01. ${closure01Result}"
+
+        def closure02Result = doClosureWithArgs("03."){
+            closure02(20)
+        }
+
+
+        def closure03Result = doClosureWithArgs("02.", {closure02(20)})
+        println "${who}, $closure02Result"
+        println "${who}, $closure03Result"
+
+        //相同的意思,
+        apply foo: "bar"
+        apply([foo:"bar"])
+        //Map的多个Key-value可以分散在参数中
+        apply foo: "bar", hello: "World"
+
+    }
+
+    static Object doClosure(Closure fn){
+        return fn()
+    }
+
+    static Object doClosureWithArgs(name, Closure fn){
+        return "Name: ${name}, ${fn()}"
+    }
+
+    static void apply(Map args){
+        println(args)
+    }
+}
+
+
+task("hello"){
+    doLast {
+        def world = 'Gradle'
+        println 'Hello $world'
+        println "Hello $world"
+    }
+}
+
+
+// 创建定义Task "world"
+task world(type: InspectClosure){
+    who = "Who First"
+    who = "Who Again"
+    delegate.who = "Who Final"\
+}
+//以上也可以用
+/*
+tasks.register("world", InspectClosure){
+    who = "World"
+}
+ */
+
