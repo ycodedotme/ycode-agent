@@ -1,0 +1,3 @@
+rootProject.name = 'ycode-agent'
+include 'agent'
+include 'demo'
