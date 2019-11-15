@@ -10,3 +10,10 @@
 
 #. ./gradlew :demo:hello
 #. ./gradlew :demo:world
+
+
+03. Simple Http Project
+=============================
+
+#. ./gradlew sample-http:debug
+#. Demo task hello(type:xxx)示例解释

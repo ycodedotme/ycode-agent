@@ -18,6 +18,7 @@ test {
 
 
 //import groovy.lang.Closure;
+//import org.gradle.api.DefaultTask
 class InspectClosure extends DefaultTask{
     String who
 
@@ -81,15 +82,55 @@ task("hello"){
 
 
 // 创建定义Task "world"
-task world(type: InspectClosure){
+task world, type: InspectClosure, {
     who = "Who First"
     who = "Who Again"
-    delegate.who = "Who Final"\
+    delegate.who = "Who Final"
 }
+
 //以上也可以用
 /*
 tasks.register("world", InspectClosure){
     who = "World"
+}
+ */
+//自定义DSL
+/*
+
+@BaseScript(MyDSL)
+import groovy.transform.BaseScript
+
+// Something to deal with people
+class Person {
+    String name
+    Closure method
+    String toString() { "$name" }
+    Person(String name, Closure cl) {
+        this.name = name
+        this.method = cl
+        this.method.delegate = this
+    }
+    def greet(String greeting) {
+        println "$greeting $name"
+    }
+}
+
+//  and our base DSL class
+
+abstract class MyDSL extends Script {
+    def methodMissing(String name, args) {
+        return new Person(name, args[0])
+    }
+
+    def person(Person p) {
+        p.method(p)
+    }
+}
+
+// Then our actual script
+
+person tim {
+    greet 'Hello'
 }
  */
 

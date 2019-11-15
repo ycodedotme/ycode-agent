@@ -1,3 +1,5 @@
-rootProject.name = 'ycode-agent'
+rootProject.name = 'ycode'
 include 'agent'
 include 'demo'
+include 'simple-http'
+

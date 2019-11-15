@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+apply from: basicJava
+apply from: basicTest
+
+dependencies {
+    implementation 'io.netty:netty-all:4.1.43.Final'
+}
+
+application {
+    mainClassName = 'ycode.simplehttp.App'
+}
+
+
+task debug(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'ycode.simplehttp.App'
+
+    // arguments to pass to the application
+    args '8888'
+
+    debugOptions {
+        enabled = true
+        port = 5566
+        server = true
+        suspend = false
+    }
+}

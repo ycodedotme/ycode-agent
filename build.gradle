@@ -6,6 +6,12 @@ allprojects{
     }
 }
 
+ext{
+    basicJava  = "${rootProject.projectDir}/gradle/basic-java.gradle"
+    basicTest  = "${rootProject.projectDir}/gradle/basic-test.gradle"
+}
+
 subprojects{
-    version = '0.1-SNAPSHOT'
+    project.version = '0.1-SNAPSHOT'
+    project.group = "ycode"
 }
