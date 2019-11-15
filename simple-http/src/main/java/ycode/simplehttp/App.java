@@ -10,9 +10,7 @@ import io.netty.handler.logging.LoggingHandler;
 
 public class App {
 
-
     private void serve(int port) throws InterruptedException {
-
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup =  new NioEventLoopGroup();
         try{

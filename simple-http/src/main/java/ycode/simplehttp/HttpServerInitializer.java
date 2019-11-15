@@ -9,7 +9,6 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
     @Override
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
-
         pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new HttpServerHandler());
     }

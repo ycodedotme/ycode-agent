@@ -1,21 +1,20 @@
 package ycode.simplehttp;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.*;
-import io.netty.util.CharsetUtil;
+import io.netty.handler.codec.http.HttpObject;
+import io.netty.handler.codec.http.HttpRequest;
 
 public class HttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
+
+    private SimpleHttpRequestHandler handler = new SimpleHttpRequestHandler();
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
-        if (msg instanceof LastHttpContent) {
-            ByteBuf content = Unpooled.copiedBuffer("Hello World.", CharsetUtil.UTF_8);
-            FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
-            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
-            ctx.write(response);
+        if (msg instanceof HttpRequest) {
+            ctx.write(handler.response((HttpRequest) msg));
+        }else{
+            ctx.write(handler.badRequest());
         }
     }
 
