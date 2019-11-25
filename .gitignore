@@ -5,3 +5,9 @@
 build
 
 .idea
+
+bin/
+.project
+.settings
+**/.settings
+**/.classpath
