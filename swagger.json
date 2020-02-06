@@ -1,0 +1,214 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "口罩预约",
+    "version": "1.0.0",
+    "title": "口罩预约",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "petstore.swagger.io",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "口罩预约",
+      "description": "口罩预约API"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/sku_status": {
+      "get": {
+        "tags": [
+          "口罩预约"
+        ],
+        "summary": "显示当前的SKU和库存信息",
+        "description": "根据当前时间段决定显示的SKU种类和SKU内容， 需要缓存",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "sku 列表",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SKU"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pre_order": {
+      "post": {
+        "tags": [
+          "口罩预约"
+        ],
+        "summary": "预约SKU",
+        "description": "根据当地选择的SKU，当前时间，库存信息，固定地址决定是否生成预订单",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "提交Preorder",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PreOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "预订单状态",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PreOrderStatus"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export_order": {
+      "post": {
+        "tags": [
+          "口罩预约"
+        ],
+        "summary": "导出",
+        "description": "根据当地选择的SKU，当前时间，库存信息，固定地址决定是否生成预订单",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "提交Preorder",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PreOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "预订单状态",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PreOrderStatus"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SKU": {
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "format": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "img_url": {
+          "type": "string",
+          "format": "string"
+        },
+        "title": {
+          "type": "string",
+          "format": "string"
+        }
+      }
+    },
+    "PreOrderStatus": {
+      "type": "object",
+      "properties": {
+        "succeed": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "tips": {
+          "type": "string",
+          "format": "string"
+        },
+        "uname": {
+          "type": "string",
+          "format": "string"
+        },
+        "phone": {
+          "type": "string",
+          "format": "string"
+        },
+        "addr": {
+          "type": "string",
+          "format": "string"
+        },
+        "sku_img_url": {
+          "type": "string",
+          "format": "string"
+        },
+        "sku_title": {
+          "type": "string",
+          "format": "string"
+        }
+      }
+    },
+    "PreOrder": {
+      "type": "object",
+      "properties": {
+        "uname": {
+          "type": "string",
+          "format": "string"
+        },
+        "phone": {
+          "type": "string",
+          "format": "string"
+        },
+        "addr": {
+          "type": "string",
+          "format": "string"
+        },
+        "sku": {
+          "type": "string",
+          "format": "string"
+        },
+        "fixed_addr": {
+          "type": "string",
+          "format": "string"
+        },
+        "tail_addr": {
+          "type": "string",
+          "format": "string"
+        }
+      }
+    }
+  }
+}
